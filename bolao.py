@@ -57,6 +57,7 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
             ganhadores = data['ganhadores']
             rateio = data['rateio']
 
+            #dezenasSorteadas=[1, 10, 15, 16, 22, 33]
 
             my_json_string = json.dumps(apostas)
             #print(my_json_string)
@@ -89,124 +90,122 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
             self.end_headers()
-            self.wfile.write(bytes("<center><h1>Concurso: " +
-                                   str(numeroConcurso)+"</h1></center>", "utf8"))
+            self.wfile.write(bytes("<center><h2>Concurso: " +
+                                   str(numeroConcurso)+"</h2></center>", "utf8"))
 
-            self.wfile.write(bytes("<center><h1>Acumulado: " +
-                                   str(acumulado).upper()+"</h1></center>", "utf8"))
-            self.wfile.write(bytes("<center><h1>Data: " +
-                                   str(dataConcurso)+"</h1></center>", "utf8"))
-            self.wfile.write(bytes("<center><h1>Dezenas Sorteadas " +
-                                   str(dezenasSorteadas)+"</h1></center>", "utf8"))
+            self.wfile.write(bytes("<center><h2>Acumulado: " +
+                                   str(acumulado).upper()+"</h2></center>", "utf8"))
+            self.wfile.write(bytes("<center><h2>Data: " +
+                                   str(dataConcurso)+"</h2></center>", "utf8"))
+            self.wfile.write(bytes("<center><h2>Dezenas Sorteadas " +
+                                   str(dezenasSorteadas)+"</h2></center>", "utf8"))
+
+            self.wfile.write(bytes("<center><table>", "utf8"))
+
+            self.wfile.write(bytes("<tr>", "utf8"))
+            self.wfile.write(bytes("<th bgcolor=\"#FF0000\"><font color=\"#000000\"><center>Jogo</center></font></th>","utf8"))
+            self.wfile.write(bytes("<th bgcolor=\"#FF0000\"><font color=\"#000000\"><center>Acertos</center></font></th>","utf8"))
+            self.wfile.write(bytes("<th bgcolor=\"#FF0000\"><font color=\"#000000\"><center>QtdAcertos</center></font></th>","utf8"))
+            self.wfile.write(bytes("</tr>", "utf8"))  
 
             if len(apostasCom6) > 0:
-                self.wfile.write(
-                    bytes("<center><h3>Apostas com 6 acertos</h3></center>", "utf8"))
+                #self.wfile.write(bytes("<center><h3>Apostas com 6 acertos</h3></center>", "utf8"))
                 for aposta in apostasCom6:
                     matches = set(dezenasSorteadas) & set(aposta)
                     numberOfMatched = len(matches)
-                    self.wfile.write(bytes("<center><p>", "utf8"))
-                    if numberOfMatched >= 4:
-                        self.wfile.write(
-                            bytes("<font color=""green"">", "utf8"))
-                    self.wfile.write(bytes("Jogo "+str(aposta)+" Matches: " +
-                                           str(matches)+" QtdAcertos: "+str(numberOfMatched), "utf8"))
-                    self.wfile.write(bytes("</font>", "utf8"))
-                    self.wfile.write(bytes("</p></center>", "utf8"))
+
+                    self.wfile.write(bytes("<tr>", "utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#FFD300\"><font color=\"#000000\"><center>"+str(aposta)+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#FFD300\"><font color=\"#000000\"><center>"+str(matches)+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#FFD300\"><font color=\"#000000\"><center>"+str(numberOfMatched)+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("</tr>", "utf8"))                 
+
             if len(apostasCom5) > 0:
-                self.wfile.write(
-                    bytes("<center><h3>Apostas com 5 acertos</h3></center>", "utf8"))
+                #self.wfile.write(bytes("<center><h3>Apostas com 5 acertos</h3></center>", "utf8"))
                 for aposta in apostasCom5:
                     matches = set(dezenasSorteadas) & set(aposta)
                     numberOfMatched = len(matches)
-                    self.wfile.write(bytes("<center><p>", "utf8"))
-                    if numberOfMatched >= 4:
-                        self.wfile.write(
-                            bytes("<font color=""green"">", "utf8"))
-                    self.wfile.write(bytes("Jogo "+str(aposta)+" Matches: " +
-                                           str(matches)+" QtdAcertos: "+str(numberOfMatched), "utf8"))
-                    self.wfile.write(bytes("</font>", "utf8"))
-                    self.wfile.write(bytes("</p></center>", "utf8"))
+   
+                    self.wfile.write(bytes("<tr>", "utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#2CD32\"><font color=\"#000000\"><center>"+str(aposta)+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#2CD32\"><font color=\"#000000\"><center>"+str(matches)+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#2CD32\"><font color=\"#000000\"><center>"+str(numberOfMatched)+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("</tr>", "utf8"))      
+
             if len(apostasCom4) > 0:
-                self.wfile.write(
-                    bytes("<center><h3>Apostas com 4 acertos</h3></center>", "utf8"))
+                #self.wfile.write(bytes("<center><h3>Apostas com 4 acertos</h3></center>", "utf8"))
                 for aposta in apostasCom4:
                     matches = set(dezenasSorteadas) & set(aposta)
                     numberOfMatched = len(matches)
-                    self.wfile.write(bytes("<center><p>", "utf8"))
-                    if numberOfMatched >= 4:
-                        self.wfile.write(
-                            bytes("<font color=""green"">", "utf8"))
-                    self.wfile.write(bytes("Jogo "+str(aposta)+" Matches: " +
-                                           str(matches)+" QtdAcertos: "+str(numberOfMatched), "utf8"))
-                    self.wfile.write(bytes("</font>", "utf8"))
-                    self.wfile.write(bytes("</p></center>", "utf8"))
+     
+                    self.wfile.write(bytes("<tr>", "utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#2CD32\"><font color=\"#000000\"><center>"+str(aposta)+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#2CD32\"><font color=\"#000000\"><center>"+str(matches)+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#2CD32\"><font color=\"#000000\"><center>"+str(numberOfMatched)+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("</tr>", "utf8"))      
+
             if len(apostasCom3) > 0:
-                self.wfile.write(
-                    bytes("<center><h3>Apostas com 3 acertos</h3></center>", "utf8"))
+                #self.wfile.write(bytes("<center><h3>Apostas com 3 acertos</h3></center>", "utf8"))
                 for aposta in apostasCom3:
                     matches = set(dezenasSorteadas) & set(aposta)
                     numberOfMatched = len(matches)
-                    self.wfile.write(bytes("<center><p>", "utf8"))
-                    if numberOfMatched >= 4:
-                        self.wfile.write(
-                            bytes("<font color=""green"">", "utf8"))
-                    self.wfile.write(bytes("Jogo "+str(aposta)+" Matches: " +
-                                           str(matches)+" QtdAcertos: "+str(numberOfMatched), "utf8"))
-                    self.wfile.write(bytes("</font>", "utf8"))
-                    self.wfile.write(bytes("</p></center>", "utf8"))
+
+                    self.wfile.write(bytes("<tr>", "utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>"+str(aposta)+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>"+str(matches)+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>"+str(numberOfMatched)+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("</tr>", "utf8"))      
+
             if len(apostasCom2) > 0:
-                self.wfile.write(
-                    bytes("<center><h3>Apostas com 2 acertos</h3></center>", "utf8"))
+                #self.wfile.write(bytes("<center><h3>Apostas com 2 acertos</h3></center>", "utf8"))
                 for aposta in apostasCom2:
                     matches = set(dezenasSorteadas) & set(aposta)
                     numberOfMatched = len(matches)
-                    self.wfile.write(bytes("<center><p>", "utf8"))
-                    if numberOfMatched >= 4:
-                        self.wfile.write(
-                            bytes("<font color=""green"">", "utf8"))
-                    self.wfile.write(bytes("Jogo "+str(aposta)+" Matches: " +
-                                           str(matches)+" QtdAcertos: "+str(numberOfMatched), "utf8"))
-                    self.wfile.write(bytes("</font>", "utf8"))
-                    self.wfile.write(bytes("</p></center>", "utf8"))
+            
+                    self.wfile.write(bytes("<tr>", "utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>"+str(aposta)+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>"+str(matches)+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>"+str(numberOfMatched)+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("</tr>", "utf8"))      
+
             if len(apostasCom1) > 0:
-                self.wfile.write(
-                    bytes("<center><h3>Apostas com 1 acertos</h3></center>", "utf8"))
+                #self.wfile.write(bytes("<center><h3>Apostas com 1 acertos</h3></center>", "utf8"))
                 for aposta in apostasCom1:
                     matches = set(dezenasSorteadas) & set(aposta)
                     numberOfMatched = len(matches)
-                    self.wfile.write(bytes("<center><p>", "utf8"))
-                    if numberOfMatched >= 4:
-                        self.wfile.write(
-                            bytes("<font color=""green"">", "utf8"))
-                    self.wfile.write(bytes("Jogo "+str(aposta)+" Matches: " +
-                                           str(matches)+" QtdAcertos: "+str(numberOfMatched), "utf8"))
-                    self.wfile.write(bytes("</font>", "utf8"))
-                    self.wfile.write(bytes("</p></center>", "utf8"))
+  
+                    self.wfile.write(bytes("<tr>", "utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>"+str(aposta)+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>"+str(matches)+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>"+str(numberOfMatched)+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("</tr>", "utf8"))      
+
             if len(apostasCom0) > 0:
-                self.wfile.write(
-                    bytes("<center><h3>Apostas com 0 acertos</h3></center>", "utf8"))
+                #self.wfile.write(bytes("<center><h3>Apostas com 0 acertos</h3></center>", "utf8"))
                 for aposta in apostasCom0:
                     matches = set(dezenasSorteadas) & set(aposta)
                     numberOfMatched = len(matches)
-                    self.wfile.write(bytes("<center><p>", "utf8"))
-                    if numberOfMatched >= 4:
-                        self.wfile.write(
-                            bytes("<font color=""green"">", "utf8"))
-                    self.wfile.write(bytes("Jogo "+str(aposta)+" Matches: " +
-                                           str(matches)+" QtdAcertos: "+str(numberOfMatched), "utf8"))
-                    self.wfile.write(bytes("</font>", "utf8"))
-                    self.wfile.write(bytes("</p></center>", "utf8"))
+
+                    self.wfile.write(bytes("<tr>", "utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>"+str(aposta)+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>"+str(matches)+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>"+str(numberOfMatched)+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("</tr>", "utf8"))      
+
+            self.wfile.write(bytes("</center></table>", "utf8"))
+
+
+
             self.wfile.write(bytes("<center><h2>Acertos na Sena: " +
                                    str(ganhadores[0])+" Rateio: R$"+str(rateio[0])+"</h2></center>", "utf8"))
             self.wfile.write(bytes("<center><h2>Acertos na Quina: " +
                                    str(ganhadores[1])+" Rateio: R$"+str(rateio[1])+"</h2></center>", "utf8"))
             self.wfile.write(bytes("<center><h2>Acertos na Quadra: " +
                                    str(ganhadores[2])+" Rateio: R$"+str(rateio[2])+"</h2></center>", "utf8"))
-            self.wfile.write(bytes("<center><h1>Proximo Concurso: " +
-                                   str(proximaData)+"</h1></center>", "utf8"))
-            self.wfile.write(bytes("<center><h1>Valor Estimado: R$" +
-                                   str(proximaEstimativa)+"</h1></center>", "utf8"))
+            self.wfile.write(bytes("<center><h2>Proximo Concurso: " +
+                                   str(proximaData)+"</h2></center>", "utf8"))
+            self.wfile.write(bytes("<center><h2>Valor Estimado: R$" +
+                                   str(proximaEstimativa)+"</h2></center>", "utf8"))
 
         return
 
