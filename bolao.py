@@ -100,7 +100,7 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
             self.wfile.write(bytes("<center><h2>Dezenas Sorteadas " +
                                    str(dezenasSorteadas)+"</h2></center>", "utf8"))
 
-            self.wfile.write(bytes("<center><table>", "utf8"))
+            self.wfile.write(bytes("<center><table style=\"width:100%\">", "utf8"))
 
             self.wfile.write(bytes("<tr>", "utf8"))
             self.wfile.write(bytes("<th bgcolor=\"#FF0000\"><font color=\"#000000\"><center>Jogo</center></font></th>","utf8"))
