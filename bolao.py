@@ -2,6 +2,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import requests
 import json
 from pymongo import MongoClient
+from urllib.parse import urlsplit, parse_qs
 
 
 def getMegaSenaResult():
@@ -35,27 +36,65 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
 
         apostasAlbum = mongoDatabase.apostas
 
+
         #print(str(apostasAlbum))
 
         apostas = []
         cursor = apostasAlbum.find({})
         for document in cursor:
-            #print(document)
+            
+            dezena1=[]
+            dezena2=[]
+            dezena3=[]
+            dezena4=[]
+            dezena5=[]
+            dezena6=[]
+            dezenasConsulta=[]
+
+            query = urlsplit(self.path).query
+            params = dict(parse_qs(query))
+            print(params)
+            #query_components = dict(parse.parse_qsl(parse.urlsplit(url).query))
+            #dezenasConsulta = params["dezenas"] 
+            
+            if params:
+                dezenasConsulta = params["dezenas"] 
+                print(dezenasConsulta)
+                dezenasSorteadas=[11,16,22,30,34,42]
+
+ 
+                # dezena1 = params["dezena1"]
+                # print(dezena1)
+                # dezena2 = params["dezena2"]
+                # print(dezena2)
+                # dezena3 = params["dezena3"]
+                # print(dezena3)
+                # dezena4 = params["dezena4"]
+                # print(dezena4)
+                # dezena5 = params["dezena5"]
+                # print(dezena5)
+                # dezena6 = params["dezena6"]
+                # print(dezena6)
+                #dezenasConsulta[0] = dezenasConsulta[0].replace('\'', '')
+                #print(dezenasConsulta)
+            else:   
+                url = 'https://www.lotodicas.com.br/api/mega-sena'
+
+                resp = requests.get(url=url)
+                data = resp.json()
+
+                numeroConcurso = data['numero']
+                dataConcurso = data['data']
+                dezenasSorteadas = data['sorteio']
+                proximaData = data['proximo_data']
+                acumulado = data['acumulado']
+                proximaEstimativa = data['proximo_estimativa']
+                ganhadores = data['ganhadores']
+                rateio = data['rateio']
+
+
             apostas = document["apostas"]
 
-            url = 'https://www.lotodicas.com.br/api/mega-sena'
-
-            resp = requests.get(url=url)
-            data = resp.json()
-
-            numeroConcurso = data['numero']
-            dataConcurso = data['data']
-            dezenasSorteadas = data['sorteio']
-            proximaData = data['proximo_data']
-            acumulado = data['acumulado']
-            proximaEstimativa = data['proximo_estimativa']
-            ganhadores = data['ganhadores']
-            rateio = data['rateio']
 
 
             my_json_string = json.dumps(apostas)
@@ -89,13 +128,13 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
             self.end_headers()
-            self.wfile.write(bytes("<center><h1>Concurso: " +
-                                   str(numeroConcurso)+"</h1></center>", "utf8"))
+            # self.wfile.write(bytes("<center><h1>Concurso: " +
+            #                        str(numeroConcurso)+"</h1></center>", "utf8"))
 
-            self.wfile.write(bytes("<center><h1>Acumulado: " +
-                                   str(acumulado).upper()+"</h1></center>", "utf8"))
-            self.wfile.write(bytes("<center><h1>Data: " +
-                                   str(dataConcurso)+"</h1></center>", "utf8"))
+            # self.wfile.write(bytes("<center><h1>Acumulado: " +
+            #                        str(acumulado).upper()+"</h1></center>", "utf8"))
+            # self.wfile.write(bytes("<center><h1>Data: " +
+            #                        str(dataConcurso)+"</h1></center>", "utf8"))
             self.wfile.write(bytes("<center><h1>Dezenas Sorteadas " +
                                    str(dezenasSorteadas)+"</h1></center>", "utf8"))
 
@@ -196,17 +235,17 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
                     self.wfile.write(bytes("Jogo "+str(aposta)+" Matches: " +
                                            str(matches)+" QtdAcertos: "+str(numberOfMatched), "utf8"))
                     self.wfile.write(bytes("</font>", "utf8"))
-                    self.wfile.write(bytes("</p></center>", "utf8"))
-            self.wfile.write(bytes("<center><h2>Acertos na Sena: " +
-                                   str(ganhadores[0])+" Rateio: R$"+str(rateio[0])+"</h2></center>", "utf8"))
-            self.wfile.write(bytes("<center><h2>Acertos na Quina: " +
-                                   str(ganhadores[1])+" Rateio: R$"+str(rateio[1])+"</h2></center>", "utf8"))
-            self.wfile.write(bytes("<center><h2>Acertos na Quadra: " +
-                                   str(ganhadores[2])+" Rateio: R$"+str(rateio[2])+"</h2></center>", "utf8"))
-            self.wfile.write(bytes("<center><h1>Proximo Concurso: " +
-                                   str(proximaData)+"</h1></center>", "utf8"))
-            self.wfile.write(bytes("<center><h1>Valor Estimado: R$" +
-                                   str(proximaEstimativa)+"</h1></center>", "utf8"))
+            #         self.wfile.write(bytes("</p></center>", "utf8"))
+            # self.wfile.write(bytes("<center><h2>Acertos na Sena: " +
+            #                        str(ganhadores[0])+" Rateio: R$"+str(rateio[0])+"</h2></center>", "utf8"))
+            # self.wfile.write(bytes("<center><h2>Acertos na Quina: " +
+            #                        str(ganhadores[1])+" Rateio: R$"+str(rateio[1])+"</h2></center>", "utf8"))
+            # self.wfile.write(bytes("<center><h2>Acertos na Quadra: " +
+            #                        str(ganhadores[2])+" Rateio: R$"+str(rateio[2])+"</h2></center>", "utf8"))
+            # self.wfile.write(bytes("<center><h1>Proximo Concurso: " +
+            #                        str(proximaData)+"</h1></center>", "utf8"))
+            # self.wfile.write(bytes("<center><h1>Valor Estimado: R$" +
+            #                        str(proximaEstimativa)+"</h1></center>", "utf8"))
 
         return
 
