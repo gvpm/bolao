@@ -57,7 +57,8 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
             ganhadores = data['ganhadores']
             rateio = data['rateio']
 
-            #dezenasSorteadas=[1, 10, 15, 16, 22, 33]
+            #dezenasSorteadas=[8,18,20,24,36,45]
+            
 
             my_json_string = json.dumps(apostas)
             #print(my_json_string)
@@ -104,8 +105,8 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
 
             self.wfile.write(bytes("<tr>", "utf8"))
             self.wfile.write(bytes("<th bgcolor=\"#FF0000\"><font color=\"#000000\"><center>Jogo</center></font></th>","utf8"))
-            self.wfile.write(bytes("<th bgcolor=\"#FF0000\"><font color=\"#000000\"><center>Acertos</center></font></th>","utf8"))
             self.wfile.write(bytes("<th bgcolor=\"#FF0000\"><font color=\"#000000\"><center>QtdAcertos</center></font></th>","utf8"))
+            self.wfile.write(bytes("<th bgcolor=\"#FF0000\"><font color=\"#000000\"><center>Acertos</center></font></th>","utf8"))
             self.wfile.write(bytes("</tr>", "utf8"))  
 
             if len(apostasCom6) > 0:
@@ -116,8 +117,8 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
 
                     self.wfile.write(bytes("<tr>", "utf8"))
                     self.wfile.write(bytes("<td bgcolor=\"#FFD300\"><font color=\"#000000\"><center>"+str(aposta)+"</center></font></td>","utf8"))
-                    self.wfile.write(bytes("<td bgcolor=\"#FFD300\"><font color=\"#000000\"><center>"+str(matches)+"</center></font></td>","utf8"))
                     self.wfile.write(bytes("<td bgcolor=\"#FFD300\"><font color=\"#000000\"><center>"+str(numberOfMatched)+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#FFD300\"><font color=\"#000000\"><center>"+str(matches)+"</center></font></td>","utf8"))
                     self.wfile.write(bytes("</tr>", "utf8"))                 
 
             if len(apostasCom5) > 0:
@@ -128,8 +129,8 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
    
                     self.wfile.write(bytes("<tr>", "utf8"))
                     self.wfile.write(bytes("<td bgcolor=\"#2CD32\"><font color=\"#000000\"><center>"+str(aposta)+"</center></font></td>","utf8"))
-                    self.wfile.write(bytes("<td bgcolor=\"#2CD32\"><font color=\"#000000\"><center>"+str(matches)+"</center></font></td>","utf8"))
                     self.wfile.write(bytes("<td bgcolor=\"#2CD32\"><font color=\"#000000\"><center>"+str(numberOfMatched)+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#2CD32\"><font color=\"#000000\"><center>"+str(matches)+"</center></font></td>","utf8"))
                     self.wfile.write(bytes("</tr>", "utf8"))      
 
             if len(apostasCom4) > 0:
@@ -140,8 +141,8 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
      
                     self.wfile.write(bytes("<tr>", "utf8"))
                     self.wfile.write(bytes("<td bgcolor=\"#2CD32\"><font color=\"#000000\"><center>"+str(aposta)+"</center></font></td>","utf8"))
-                    self.wfile.write(bytes("<td bgcolor=\"#2CD32\"><font color=\"#000000\"><center>"+str(matches)+"</center></font></td>","utf8"))
                     self.wfile.write(bytes("<td bgcolor=\"#2CD32\"><font color=\"#000000\"><center>"+str(numberOfMatched)+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#2CD32\"><font color=\"#000000\"><center>"+str(matches)+"</center></font></td>","utf8"))
                     self.wfile.write(bytes("</tr>", "utf8"))      
 
             if len(apostasCom3) > 0:
@@ -152,8 +153,8 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
 
                     self.wfile.write(bytes("<tr>", "utf8"))
                     self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>"+str(aposta)+"</center></font></td>","utf8"))
-                    self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>"+str(matches)+"</center></font></td>","utf8"))
                     self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>"+str(numberOfMatched)+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>"+str(matches)+"</center></font></td>","utf8"))
                     self.wfile.write(bytes("</tr>", "utf8"))      
 
             if len(apostasCom2) > 0:
@@ -164,8 +165,8 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
             
                     self.wfile.write(bytes("<tr>", "utf8"))
                     self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>"+str(aposta)+"</center></font></td>","utf8"))
-                    self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>"+str(matches)+"</center></font></td>","utf8"))
                     self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>"+str(numberOfMatched)+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>"+str(matches)+"</center></font></td>","utf8"))
                     self.wfile.write(bytes("</tr>", "utf8"))      
 
             if len(apostasCom1) > 0:
@@ -176,8 +177,8 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
   
                     self.wfile.write(bytes("<tr>", "utf8"))
                     self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>"+str(aposta)+"</center></font></td>","utf8"))
-                    self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>"+str(matches)+"</center></font></td>","utf8"))
                     self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>"+str(numberOfMatched)+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>"+str(matches)+"</center></font></td>","utf8"))
                     self.wfile.write(bytes("</tr>", "utf8"))      
 
             if len(apostasCom0) > 0:
@@ -188,8 +189,8 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
 
                     self.wfile.write(bytes("<tr>", "utf8"))
                     self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>"+str(aposta)+"</center></font></td>","utf8"))
-                    self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>"+str(matches)+"</center></font></td>","utf8"))
                     self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>"+str(numberOfMatched)+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center> </center></font></td>","utf8"))
                     self.wfile.write(bytes("</tr>", "utf8"))      
 
             self.wfile.write(bytes("</center></table>", "utf8"))
