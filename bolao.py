@@ -52,7 +52,27 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
 
             tamanhoCicloAtual = (concursoAtual - (concursoInicial-1)) % tamanhoCiclo
 
-            
+            self.send_response(200)
+            self.send_header('Content-type', 'text/html')
+            self.end_headers()
+
+            ultimoDoCicloAnterior=concursoAtual-tamanhoCicloAtual
+
+            sorteiosNoCiclo=""
+            for x in range(1, 9):
+            #     concurso = concursoAtual-x
+                sorteiosNoCiclo = sorteiosNoCiclo+" "+ str(ultimoDoCicloAnterior + x)
+
+            print(sorteiosNoCiclo)
+
+            self.wfile.write(bytes("<center><font size=\"10\" face=\"Courier New\" ><table style=\"width:100%\">", "utf8"))     
+            self.wfile.write(bytes("<tr>", "utf8"))
+            self.wfile.write(bytes("<th bgcolor=\"#2E8B57\"><font color=\"#000000\"><center>Sorteios No Ciclo</center></font></th>","utf8"))
+            self.wfile.write(bytes("</tr>", "utf8"))  
+            self.wfile.write(bytes("<tr>", "utf8"))
+            self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>" + sorteiosNoCiclo +"</center></font></td>","utf8"))
+            self.wfile.write(bytes("</tr>", "utf8")) 
+            self.wfile.write(bytes("</center></font></table>", "utf8"))
 
             for x in range(0, tamanhoCicloAtual):
                 concurso = concursoAtual-x
@@ -102,9 +122,7 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
                     elif numberOfMatched == 0:
                         apostasCom0.append(aposta)
 
-                self.send_response(200)
-                self.send_header('Content-type', 'text/html')
-                self.end_headers()
+
 
 
                 self.wfile.write(bytes("<center><font size=\"10\" face=\"Courier New\" ><table style=\"width:100%\">", "utf8"))     
@@ -259,18 +277,34 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
                 self.wfile.write(bytes("</center></font></table>", "utf8"))
                 self.wfile.write(bytes("<center><font size=\"10\" face=\"Courier New\" ><table style=\"width:100%\">", "utf8"))     
                 self.wfile.write(bytes("<tr>", "utf8"))
-                self.wfile.write(bytes("<th bgcolor=\"#FF0000\"><font color=\"#000000\"><center>Proximo Concurso</center></font></th>","utf8"))
+                self.wfile.write(bytes("<th bgcolor=\"#2E8B57\"><font color=\"#000000\"><center>Proximo Concurso</center></font></th>","utf8"))
                 self.wfile.write(bytes("</tr>", "utf8"))  
                 self.wfile.write(bytes("<tr>", "utf8"))
                 self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>" + str(proximaData)+"</center></font></td>","utf8"))
                 self.wfile.write(bytes("</tr>", "utf8")) 
                 self.wfile.write(bytes("<tr>", "utf8"))
-                self.wfile.write(bytes("<th bgcolor=\"#FF0000\"><font color=\"#000000\"><center>Valor Estimado</center></font></th>","utf8"))
+                self.wfile.write(bytes("<th bgcolor=\"#2E8B57\"><font color=\"#000000\"><center>Valor Estimado</center></font></th>","utf8"))
                 self.wfile.write(bytes("</tr>", "utf8"))  
                 self.wfile.write(bytes("<tr>", "utf8"))
                 self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>R$" + str(proximaEstimativa)+"</center></font></td>","utf8"))
                 self.wfile.write(bytes("</tr>", "utf8")) 
                 self.wfile.write(bytes("</center></font></table>", "utf8"))
+
+                #self.wfile.write(bytes("<p>&nbsp;</p>", "utf8"))
+                # self.wfile.write(bytes("<center><font size=\"10\" face=\"Courier New\" ><table style=\"width:100%\">", "utf8"))     
+                # self.wfile.write(bytes("<tr>", "utf8"))
+                # self.wfile.write(bytes("<th bgcolor=\"#fff\"><font color=\"#000000\"><center></center></font></th>","utf8"))
+                # self.wfile.write(bytes("</tr>", "utf8"))  
+                # self.wfile.write(bytes("<tr>", "utf8"))
+                # self.wfile.write(bytes("<td bgcolor=\"#fff\"><font color=\"#000000\"><center></center></font></td>","utf8"))
+                # self.wfile.write(bytes("</tr>", "utf8")) 
+                # self.wfile.write(bytes("<tr>", "utf8"))
+                # self.wfile.write(bytes("<th bgcolor=\"#fff\"><font color=\"#000000\"><center></center></font></th>","utf8"))
+                # self.wfile.write(bytes("</tr>", "utf8"))  
+                # self.wfile.write(bytes("<tr>", "utf8"))
+                # self.wfile.write(bytes("<td bgcolor=\"#fff\"><font color=\"#000000\"><center></center></font></td>","utf8"))
+                # self.wfile.write(bytes("</tr>", "utf8")) 
+                # self.wfile.write(bytes("</center></font></table>", "utf8"))
 
         return
 
