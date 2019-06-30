@@ -91,7 +91,7 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
                 ganhadores = data['ganhadores']
                 rateio = data['rateio']
 
-                #dezenasSorteadas=[8,18,20,24,36,45]
+                dezenasSorteadas=[16, 17, 25, 47, 48, 58]
 
 
                 my_json_string = json.dumps(apostas)
