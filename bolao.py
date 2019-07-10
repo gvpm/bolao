@@ -191,6 +191,9 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
 
 
                 tamanhoCicloAtual = (concursoAtual - (concursoInicial-1)) % tamanhoCiclo
+                print(str(tamanhoCicloAtual))
+                if tamanhoCicloAtual == 0:
+                    tamanhoCicloAtual = tamanhoCiclo
 
                 self.send_response(200)
                 self.send_header('Content-type', 'text/html')
