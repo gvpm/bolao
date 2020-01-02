@@ -5,22 +5,6 @@ from pymongo import MongoClient
 from urllib.parse import urlsplit, parse_qs
 
 
-def getMegaSenaResult():
-
-    url = 'https://www.lotodicas.com.br/api/mega-sena'
-
-    params = dict(
-        loteria='megasena',
-        token='6YrWtz8nbAOB7FN',
-    )
-    resp = requests.get(url=url)
-    data = resp.json()
-    #resultado = json.load(data)
-
-    numeroConcurso = data['numero']
-    dataConcurso = data['data']
-    dezenasSorteadas = data['sorteio']
-
 
 # HTTPRequestHandler class
 class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
@@ -52,39 +36,31 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
             params = dict(parse_qs(query))
             if params:
                 dezenasConsulta = params["jogo"] 
-                #print(dezenasConsulta[0])                    
-                #dezenasSorteadas="["+dezenasConsulta[0]+"]"
-                dezenasSorteadas=(dezenasConsulta[0].split(','))
-                #print(dezenasSorteadas)
-                dezenasSorteadas = [int(i) for i in dezenasSorteadas]
-                #print(dezenasSorteadas)
 
-                #url = ("https://www.lotodicas.com.br/api/mega-sena/")
+                dezenasSorteadas=(dezenasConsulta[0].split(','))
+
+                dezenasSorteadas = [int(i) for i in dezenasSorteadas]
+
                 url = ("http://apiloterias.com.br/api0/json.php?loteria=megasena&concurso=")
                 
 
                 resp = requests.get(url=url)
                 data = resp.json()
 
-                # numeroConcurso = data['numero']
-                # dataConcurso = data['data']
-                # #dezenasSorteadas = data['sorteio']
-                # proximaData = data['proximo_data']
-                # acumulado = data['acumulado']
-                # proximaEstimativa = data['proximo_estimativa']
-                # ganhadores = data['ganhadores']
-                # rateio = data['rateio']
 
                 numeroConcurso = data['concurso']['numero']
                 dataConcurso = data['concurso']['data']
                 proximaData = data['proximo_concurso']['data']
-                #acumulado = data['acumulado']
-                acumulado = ''
+                acumulado = data['concurso']['valor_acumulado']
+                #acumulado = ''
                 proximaEstimativa = data['proximo_concurso']['valor_estimado']
-                #ganhadores = data['ganhadores']
-                ganhadores = ''
-                #rateio = data['rateio']
-                rateio = ''
+
+                ganhadoresSena = data['concurso']['premiacao']['sena']['ganhadores']
+                rateioSena = data['concurso']['premiacao']['sena']['valor_pago']
+                ganhadoresQuina = data['concurso']['premiacao']['quina']['ganhadores']
+                rateioQuina = data['concurso']['premiacao']['quina']['valor_pago']
+                ganhadoresQuadra = data['concurso']['premiacao']['quadra']['ganhadores']
+                rateioQuadra = data['concurso']['premiacao']['quadra']['valor_pago'] 
 
                 self.send_response(200)
                 self.send_header('Content-type', 'text/html')
@@ -199,15 +175,13 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
                         self.wfile.write(bytes("</tr>", "utf8"))      
                 
             else:
-                #url = 'https://www.lotodicas.com.br/api/mega-sena'
+
                 url= 'http://apiloterias.com.br/api0/json.php?loteria=megasena&concurso='
                 resp = requests.get(url=url)
                 data = resp.json()
                 print(data)
                 concursoAtual = int(data['concurso']['numero'])
-                #print('ConcursoAtual: ' + concursoAtual)
-                #print('TamanhoCiclo: ' + tamanhoCiclo)
-                #print('ConcursoInicial: ' + concursoInicial)
+
 
                 tamanhoCicloAtual = (concursoAtual - (concursoInicial-1)) % tamanhoCiclo
                 print(str(tamanhoCicloAtual))
@@ -243,7 +217,7 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
                 for x in range(0, tamanhoCicloAtual):
                     concurso = concursoAtual-x
 
-                    #url = ("https://www.lotodicas.com.br/api/mega-sena/"+ str(concurso))
+
                     url = ("http://apiloterias.com.br/api0/json.php?loteria=megasena&concurso="+ str(concurso))
                     
 
@@ -259,14 +233,18 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
 
 
                     proximaData = data['proximo_concurso']['data']
-                    #acumulado = data['acumulado']
-                    acumulado = ''
+                    acumulado = data['concurso']['valor_acumulado']
+                    #acumulado = ''
                     proximaEstimativa = data['proximo_concurso']['valor_estimado']
-                    #ganhadores = data['ganhadores']
-                    ganhadores = ''
-                    #rateio = data['rateio']
-                    rateio = ''
 
+                    ganhadoresSena = data['concurso']['premiacao']['sena']['ganhadores']
+                    rateioSena = data['concurso']['premiacao']['sena']['valor_pago']
+
+                    ganhadoresQuina = data['concurso']['premiacao']['quina']['ganhadores']
+                    rateioQuina = data['concurso']['premiacao']['quina']['valor_pago']
+
+                    ganhadoresQuadra = data['concurso']['premiacao']['quadra']['ganhadores']
+                    rateioQuadra = data['concurso']['premiacao']['quadra']['valor_pago']                    
 
 
 
@@ -431,24 +409,24 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
                     self.wfile.write(bytes("<th bgcolor=\"#2E8B57\"><font color=\"#000000\"><center>Rateio</center></font></th>","utf8"))
                     self.wfile.write(bytes("</tr>", "utf8"))  
                     self.wfile.write(bytes("<tr>", "utf8"))
-                    self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>" + str(ganhadores[0])+"</center></font></td>","utf8"))
-                    self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>" +str(rateio[0])+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>" + str(ganhadoresSena)+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>" +str(rateioSena)+"</center></font></td>","utf8"))
                     self.wfile.write(bytes("</tr>", "utf8"))
                     self.wfile.write(bytes("<tr>", "utf8"))
                     self.wfile.write(bytes("<th bgcolor=\"#2E8B57\"><font color=\"#000000\"><center>Acertos na Quina</center></font></th>","utf8"))
                     self.wfile.write(bytes("<th bgcolor=\"#2E8B57\"><font color=\"#000000\"><center>Rateio</center></font></th>","utf8"))
                     self.wfile.write(bytes("</tr>", "utf8"))  
                     self.wfile.write(bytes("<tr>", "utf8"))
-                    self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>" + str(ganhadores[1])+"</center></font></td>","utf8"))
-                    self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>" +str(rateio[1])+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>" + str(ganhadoresQuina)+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>" +str(rateioQuina)+"</center></font></td>","utf8"))
                     self.wfile.write(bytes("</tr>", "utf8"))
                     self.wfile.write(bytes("<tr>", "utf8"))
                     self.wfile.write(bytes("<th bgcolor=\"#2E8B57\"><font color=\"#000000\"><center>Acertos na Quadra</center></font></th>","utf8"))
                     self.wfile.write(bytes("<th bgcolor=\"#2E8B57\"><font color=\"#000000\"><center>Rateio</center></font></th>","utf8"))
                     self.wfile.write(bytes("</tr>", "utf8"))  
                     self.wfile.write(bytes("<tr>", "utf8"))
-                    self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>" + str(ganhadores[2])+"</center></font></td>","utf8"))
-                    self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>" +str(rateio[2])+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>" + str(ganhadoresQuadra)+"</center></font></td>","utf8"))
+                    self.wfile.write(bytes("<td bgcolor=\"#D3D3D3\"><font color=\"#000000\"><center>" +str(rateioQuadra)+"</center></font></td>","utf8"))
                     self.wfile.write(bytes("</tr>", "utf8"))
                     self.wfile.write(bytes("</center></font></table>", "utf8"))
                     self.wfile.write(bytes("<center><font size=\"10\" face=\"Courier New\" ><table style=\"width:100%\">", "utf8"))     
