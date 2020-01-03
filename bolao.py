@@ -52,7 +52,6 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
                 dataConcurso = data['concurso']['data']
                 proximaData = data['proximo_concurso']['data']
                 acumulado = data['concurso']['valor_acumulado']
-                #acumulado = ''
                 proximaEstimativa = data['proximo_concurso']['valor_estimado']
 
                 ganhadoresSena = data['concurso']['premiacao']['sena']['ganhadores']
@@ -104,7 +103,6 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
                 self.wfile.write(bytes("<th bgcolor=\"#4169E1\"><font color=\"#000000\"><center>Acertos</center></font></th>","utf8"))
                 self.wfile.write(bytes("</tr>", "utf8"))  
                 if len(apostasCom6) > 0:
-                    #self.wfile.write(bytes("<center><h3>Apostas com 6 acertos</h3></center>", "utf8"))
                     for aposta in apostasCom6:
                         matches = set(dezenasSorteadas) & set(aposta)
                         numberOfMatched = len(matches)
@@ -114,7 +112,6 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
                         self.wfile.write(bytes("<td bgcolor=\"#FFD300\"><font color=\"#000000\"><center>"+str(matches)+"</center></font></td>","utf8"))
                         self.wfile.write(bytes("</tr>", "utf8"))                 
                 if len(apostasCom5) > 0:
-                    #self.wfile.write(bytes("<center><h3>Apostas com 5 acertos</h3></center>", "utf8"))
                     for aposta in apostasCom5:
                         matches = set(dezenasSorteadas) & set(aposta)
                         numberOfMatched = len(matches)
@@ -124,7 +121,6 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
                         self.wfile.write(bytes("<td bgcolor=\"#2CD32\"><font color=\"#000000\"><center>"+str(matches)+"</center></font></td>","utf8"))
                         self.wfile.write(bytes("</tr>", "utf8"))      
                 if len(apostasCom4) > 0:
-                    #self.wfile.write(bytes("<center><h3>Apostas com 4 acertos</h3></center>", "utf8"))
                     for aposta in apostasCom4:
                         matches = set(dezenasSorteadas) & set(aposta)
                         numberOfMatched = len(matches)
@@ -134,7 +130,6 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
                         self.wfile.write(bytes("<td bgcolor=\"#2CD32\"><font color=\"#000000\"><center>"+str(matches)+"</center></font></td>","utf8"))
                         self.wfile.write(bytes("</tr>", "utf8"))      
                 if len(apostasCom3) > 0:
-                    #self.wfile.write(bytes("<center><h3>Apostas com 3 acertos</h3></center>", "utf8"))
                     for aposta in apostasCom3:
                         matches = set(dezenasSorteadas) & set(aposta)
                         numberOfMatched = len(matches)
@@ -144,7 +139,6 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
                         self.wfile.write(bytes("<td bgcolor=\"#808088\"><font color=\"#000000\"><center>"+str(matches)+"</center></font></td>","utf8"))
                         self.wfile.write(bytes("</tr>", "utf8"))      
                 if len(apostasCom2) > 0:
-                    #self.wfile.write(bytes("<center><h3>Apostas com 2 acertos</h3></center>", "utf8"))
                     for aposta in apostasCom2:
                         matches = set(dezenasSorteadas) & set(aposta)
                         numberOfMatched = len(matches)
@@ -154,7 +148,6 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
                         self.wfile.write(bytes("<td bgcolor=\"#98989C\"><font color=\"#000000\"><center>"+str(matches)+"</center></font></td>","utf8"))
                         self.wfile.write(bytes("</tr>", "utf8"))      
                 if len(apostasCom1) > 0:
-                    #self.wfile.write(bytes("<center><h3>Apostas com 1 acertos</h3></center>", "utf8"))
                     for aposta in apostasCom1:
                         matches = set(dezenasSorteadas) & set(aposta)
                         numberOfMatched = len(matches)
@@ -164,7 +157,6 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
                         self.wfile.write(bytes("<td bgcolor=\"#A9A9B0\"><font color=\"#000000\"><center>"+str(matches)+"</center></font></td>","utf8"))
                         self.wfile.write(bytes("</tr>", "utf8"))      
                 if len(apostasCom0) > 0:
-                    #self.wfile.write(bytes("<center><h3>Apostas com 0 acertos</h3></center>", "utf8"))
                     for aposta in apostasCom0:
                         matches = set(dezenasSorteadas) & set(aposta)
                         numberOfMatched = len(matches)
@@ -179,12 +171,12 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
                 url= 'http://apiloterias.com.br/api0/json.php?loteria=megasena&concurso='
                 resp = requests.get(url=url)
                 data = resp.json()
-                print(data)
+                #print(data)
                 concursoAtual = int(data['concurso']['numero'])
 
 
                 tamanhoCicloAtual = (concursoAtual - (concursoInicial-1)) % tamanhoCiclo
-                print(str(tamanhoCicloAtual))
+                #print(str(tamanhoCicloAtual))
                 if tamanhoCicloAtual == 0:
                     tamanhoCicloAtual = tamanhoCiclo
 
@@ -196,10 +188,9 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
 
                 sorteiosNoCiclo=""
                 for x in range(1, 9):
-                #     concurso = concursoAtual-x
                     sorteiosNoCiclo = sorteiosNoCiclo+" "+ str(ultimoDoCicloAnterior + x)
 
-                print(sorteiosNoCiclo)
+                #print(sorteiosNoCiclo)
 
                 self.wfile.write(bytes("<center><font size=\"10\" face=\"Courier New\" ><table style=\"width:100%\">", "utf8"))     
                 self.wfile.write(bytes("<tr>", "utf8"))
@@ -229,12 +220,8 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
                     dezenasSorteadas = data['concurso']['dezenas']
                     dezenasSorteadas = list(map(int, dezenasSorteadas))
 
-
-
-
                     proximaData = data['proximo_concurso']['data']
                     acumulado = data['concurso']['valor_acumulado']
-                    #acumulado = ''
                     proximaEstimativa = data['proximo_concurso']['valor_estimado']
 
                     ganhadoresSena = data['concurso']['premiacao']['sena']['ganhadores']
@@ -249,7 +236,6 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
 
 
                     my_json_string = json.dumps(apostas)
-                    #print(my_json_string)
 
                     apostasCom6 = []
                     apostasCom5 = []
@@ -316,7 +302,6 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
                     self.wfile.write(bytes("</tr>", "utf8"))  
 
                     if len(apostasCom6) > 0:
-                        #self.wfile.write(bytes("<center><h3>Apostas com 6 acertos</h3></center>", "utf8"))
                         for aposta in apostasCom6:
                             matches = set(dezenasSorteadas) & set(aposta)
                             numberOfMatched = len(matches)
@@ -328,7 +313,6 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
                             self.wfile.write(bytes("</tr>", "utf8"))                 
 
                     if len(apostasCom5) > 0:
-                        #self.wfile.write(bytes("<center><h3>Apostas com 5 acertos</h3></center>", "utf8"))
                         for aposta in apostasCom5:
                             matches = set(dezenasSorteadas) & set(aposta)
                             numberOfMatched = len(matches)
@@ -340,7 +324,6 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
                             self.wfile.write(bytes("</tr>", "utf8"))      
 
                     if len(apostasCom4) > 0:
-                        #self.wfile.write(bytes("<center><h3>Apostas com 4 acertos</h3></center>", "utf8"))
                         for aposta in apostasCom4:
                             matches = set(dezenasSorteadas) & set(aposta)
                             numberOfMatched = len(matches)
@@ -352,7 +335,6 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
                             self.wfile.write(bytes("</tr>", "utf8"))      
 
                     if len(apostasCom3) > 0:
-                        #self.wfile.write(bytes("<center><h3>Apostas com 3 acertos</h3></center>", "utf8"))
                         for aposta in apostasCom3:
                             matches = set(dezenasSorteadas) & set(aposta)
                             numberOfMatched = len(matches)
@@ -364,7 +346,6 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
                             self.wfile.write(bytes("</tr>", "utf8"))      
 
                     if len(apostasCom2) > 0:
-                        #self.wfile.write(bytes("<center><h3>Apostas com 2 acertos</h3></center>", "utf8"))
                         for aposta in apostasCom2:
                             matches = set(dezenasSorteadas) & set(aposta)
                             numberOfMatched = len(matches)
@@ -376,7 +357,6 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
                             self.wfile.write(bytes("</tr>", "utf8"))      
 
                     if len(apostasCom1) > 0:
-                        #self.wfile.write(bytes("<center><h3>Apostas com 1 acertos</h3></center>", "utf8"))
                         for aposta in apostasCom1:
                             matches = set(dezenasSorteadas) & set(aposta)
                             numberOfMatched = len(matches)
@@ -388,7 +368,6 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
                             self.wfile.write(bytes("</tr>", "utf8"))      
 
                     if len(apostasCom0) > 0:
-                        #self.wfile.write(bytes("<center><h3>Apostas com 0 acertos</h3></center>", "utf8"))
                         for aposta in apostasCom0:
                             matches = set(dezenasSorteadas) & set(aposta)
                             numberOfMatched = len(matches)
@@ -453,7 +432,7 @@ def run():
 
     # Server settings
     # Choose port 8080, for port 80, which is normally used for a http server, you need root access
-    server_address = ('', 666)
+    server_address = ('',666)
     httpd = HTTPServer(server_address, testHTTPServer_RequestHandler)
     print('running server...')
     httpd.serve_forever()
